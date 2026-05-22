@@ -1,0 +1,1592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memorial Diagnostic ERP - Professional System</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #0d47a1;
+            --secondary: #1565c0;
+            --accent: #00897b;
+            --danger: #d32f2f;
+            --warning: #f57c00;
+            --success: #388e3c;
+            --light-bg: #eceff1;
+            --white: #ffffff;
+            --text-dark: #212121;
+            --text-light: #757575;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--light-bg);
+            color: var(--text-dark);
+        }
+
+        /* ===== LOGIN PAGE ===== */
+        .login-page {
+            display: flex;
+            min-height: 100vh;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .login-container {
+            background: var(--white);
+            border-radius: 15px;
+            padding: 50px;
+            max-width: 450px;
+            width: 100%;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .login-logo {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+
+        .login-title {
+            font-size: 24px;
+            color: var(--primary);
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .login-subtitle {
+            font-size: 13px;
+            color: var(--text-light);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(0, 137, 123, 0.1);
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, var(--accent) 0%, #00695c 100%);
+            color: var(--white);
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 137, 123, 0.3);
+        }
+
+        .error-msg {
+            color: var(--danger);
+            font-size: 13px;
+            display: none;
+            margin-bottom: 15px;
+            padding: 10px;
+            background: #ffebee;
+            border-radius: 6px;
+        }
+
+        .error-msg.show {
+            display: block;
+        }
+
+        .offline-badge {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            padding: 8px 12px;
+            background: var(--warning);
+            color: var(--white);
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            display: none;
+            z-index: 1000;
+        }
+
+        .offline-badge.show {
+            display: block;
+        }
+
+        /* ===== MAIN DASHBOARD ===== */
+        .app-container {
+            display: none;
+            min-height: 100vh;
+            background: var(--light-bg);
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: var(--white);
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logo-text {
+            font-size: 22px;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .logo-text span {
+            color: var(--accent);
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            background: var(--accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .user-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .user-name {
+            font-weight: 600;
+            font-size: 13px;
+        }
+
+        .user-role {
+            font-size: 11px;
+            opacity: 0.9;
+        }
+
+        .logout-btn {
+            background: var(--danger);
+            color: var(--white);
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: all 0.3s;
+        }
+
+        .logout-btn:hover {
+            background: #b71c1c;
+        }
+
+        .main-wrapper {
+            display: flex;
+            height: calc(100vh - 70px);
+        }
+
+        /* ===== SIDEBAR ===== */
+        .sidebar {
+            width: 250px;
+            background: var(--white);
+            border-right: 1px solid #e0e0e0;
+            overflow-y: auto;
+            padding: 20px 0;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+        }
+
+        .sidebar-item {
+            margin: 5px 0;
+        }
+
+        .sidebar-link {
+            display: flex;
+            align-items: center;
+            padding: 14px 20px;
+            color: var(--text-dark);
+            text-decoration: none;
+            transition: all 0.3s;
+            border-left: 4px solid transparent;
+            gap: 12px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .sidebar-link:hover {
+            background: var(--light-bg);
+            color: var(--accent);
+            border-left-color: var(--accent);
+        }
+
+        .sidebar-link.active {
+            background: rgba(0, 137, 123, 0.1);
+            color: var(--accent);
+            border-left-color: var(--accent);
+            font-weight: 600;
+        }
+
+        .sidebar-icon {
+            font-size: 18px;
+        }
+
+        /* ===== CONTENT AREA ===== */
+        .content-area {
+            flex: 1;
+            overflow-y: auto;
+            padding: 30px;
+        }
+
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .page-title {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 30px;
+            color: var(--text-dark);
+        }
+
+        /* ===== CARDS & WIDGETS ===== */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: var(--white);
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s;
+        }
+
+        .stat-card:hover {
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+            transform: translateY(-4px);
+        }
+
+        .stat-icon {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 13px;
+            color: var(--text-light);
+            margin-bottom: 8px;
+        }
+
+        .stat-value {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        /* ===== TABLE ===== */
+        .table-container {
+            background: var(--white);
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            margin-bottom: 30px;
+            overflow-x: auto;
+        }
+
+        .table-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--text-dark);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table thead {
+            background: var(--light-bg);
+        }
+
+        table th {
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            color: var(--text-dark);
+            border-bottom: 2px solid #e0e0e0;
+            font-size: 13px;
+        }
+
+        table td {
+            padding: 15px;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 13px;
+        }
+
+        table tr:hover {
+            background: #fafafa;
+        }
+
+        /* ===== FORMS ===== */
+        .form-container {
+            background: var(--white);
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            max-width: 600px;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--text-dark);
+            font-size: 13px;
+        }
+
+        .form-input, .form-select, .form-textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: inherit;
+        }
+
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(0, 137, 123, 0.1);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        /* ===== BUTTONS ===== */
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background: #00695c;
+        }
+
+        .btn-secondary {
+            background: var(--light-bg);
+            color: var(--text-dark);
+        }
+
+        .btn-secondary:hover {
+            background: #cfd8dc;
+        }
+
+        .btn-danger {
+            background: var(--danger);
+            color: var(--white);
+        }
+
+        .btn-danger:hover {
+            background: #b71c1c;
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: var(--white);
+        }
+
+        .btn-success:hover {
+            background: #2e7d32;
+        }
+
+        /* ===== MODALS ===== */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--white);
+            border-radius: 10px;
+            padding: 30px;
+            max-width: 600px;
+            width: 90%;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--text-light);
+        }
+
+        /* ===== INVOICE ===== */
+        .invoice-container {
+            background: var(--white);
+            border-radius: 10px;
+            padding: 40px;
+            max-width: 800px;
+        }
+
+        .invoice-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 40px;
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 20px;
+        }
+
+        .invoice-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .invoice-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+
+        .invoice-field {
+            font-size: 13px;
+        }
+
+        .invoice-field-label {
+            color: var(--text-light);
+            margin-bottom: 5px;
+        }
+
+        .invoice-field-value {
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .invoice-table {
+            width: 100%;
+            margin-bottom: 30px;
+        }
+
+        .invoice-table th {
+            background: var(--light-bg);
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+            border-bottom: 2px solid #e0e0e0;
+            font-size: 13px;
+        }
+
+        .invoice-table td {
+            padding: 12px;
+            border-bottom: 1px solid #e0e0e0;
+            font-size: 13px;
+        }
+
+        .invoice-total {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 30px;
+        }
+
+        .total-box {
+            width: 300px;
+        }
+
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .total-row.final {
+            border-bottom: 2px solid var(--primary);
+            border-top: 2px solid var(--primary);
+            font-weight: 700;
+            font-size: 16px;
+            padding: 15px 0;
+            color: var(--accent);
+        }
+
+        .print-btn {
+            background: var(--primary);
+            color: var(--white);
+            padding: 12px 30px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .print-btn:hover {
+            background: #0a3d91;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .main-wrapper {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                display: flex;
+                border-right: none;
+                border-bottom: 1px solid #e0e0e0;
+                padding: 0;
+                height: auto;
+                overflow-x: auto;
+            }
+
+            .sidebar-menu {
+                display: flex;
+            }
+
+            .sidebar-item {
+                flex: 1;
+            }
+
+            .content-area {
+                padding: 20px;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- OFFLINE BADGE -->
+<div class="offline-badge" id="offlineBadge">📡 Offline Mode</div>
+
+<!-- LOGIN PAGE -->
+<div class="login-page" id="loginPage">
+    <div class="login-container">
+        <div class="login-header">
+            <div class="login-logo">🏥</div>
+            <div class="login-title">Memorial Diagnostic</div>
+            <div class="login-subtitle">Professional ERP System</div>
+        </div>
+
+        <div class="error-msg" id="loginError"></div>
+
+        <form id="loginForm" onsubmit="handleLogin(event)">
+            <div class="form-group">
+                <label class="form-label">Username</label>
+                <input type="text" class="form-input" id="loginUsername" placeholder="admin" required>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Password</label>
+                <input type="password" class="form-input" id="loginPassword" placeholder="admin@123" required>
+            </div>
+
+            <button type="submit" class="login-btn">Sign In</button>
+        </form>
+    </div>
+</div>
+
+<!-- MAIN APP -->
+<div class="app-container" id="appContainer">
+    <!-- HEADER -->
+    <div class="header">
+        <div class="header-left">
+            <div class="logo-text"><span>MD</span> MEMORIAL</div>
+        </div>
+        <div class="header-right">
+            <div class="user-profile">
+                <div class="avatar" id="userAvatar">A</div>
+                <div class="user-info">
+                    <div class="user-name" id="userName">Admin</div>
+                    <div class="user-role" id="userRole">Administrator</div>
+                </div>
+            </div>
+            <button class="logout-btn" onclick="handleLogout()">Logout</button>
+        </div>
+    </div>
+
+    <!-- MAIN WRAPPER -->
+    <div class="main-wrapper">
+        <!-- SIDEBAR -->
+        <div class="sidebar">
+            <ul class="sidebar-menu" id="sidebarMenu">
+                <li class="sidebar-item">
+                    <a class="sidebar-link active" onclick="showPage('dashboard')" data-page="dashboard">
+                        <span class="sidebar-icon">📊</span>
+                        Dashboard
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link" onclick="showPage('patients')" data-page="patients">
+                        <span class="sidebar-icon">👥</span>
+                        Patients
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link" onclick="showPage('tests')" data-page="tests">
+                        <span class="sidebar-icon">🧪</span>
+                        Tests
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link" onclick="showPage('billing')" data-page="billing">
+                        <span class="sidebar-icon">💰</span>
+                        Billing
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link" onclick="showPage('reports')" data-page="reports">
+                        <span class="sidebar-icon">📋</span>
+                        Reports
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link" onclick="showPage('inventory')" data-page="inventory">
+                        <span class="sidebar-icon">📦</span>
+                        Inventory
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link" onclick="showPage('settings')" data-page="settings">
+                        <span class="sidebar-icon">⚙️</span>
+                        Settings
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- CONTENT AREA -->
+        <div class="content-area">
+            <!-- DASHBOARD PAGE -->
+            <div class="page active" id="dashboard">
+                <div class="page-title">📊 Dashboard</div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">👥</div>
+                        <div class="stat-label">Total Patients</div>
+                        <div class="stat-value" id="totalPatients">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">🧪</div>
+                        <div class="stat-label">Total Tests</div>
+                        <div class="stat-value" id="totalTests">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">💵</div>
+                        <div class="stat-label">Total Revenue</div>
+                        <div class="stat-value" id="totalRevenue">0 Tk</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">💳</div>
+                        <div class="stat-label">Pending Amount</div>
+                        <div class="stat-value" id="pendingAmount">0 Tk</div>
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <div class="table-title">📋 Recent Transactions</div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Patient</th>
+                                <th>Test</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="recentTransactions">
+                            <tr>
+                                <td colspan="5" style="text-align: center; color: var(--text-light);">No data yet</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- PATIENTS PAGE -->
+            <div class="page" id="patients">
+                <div class="page-title">👥 Patient Management</div>
+
+                <div class="form-container">
+                    <h3 style="margin-bottom: 20px;">Add New Patient</h3>
+                    <form onsubmit="addPatient(event)">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">Full Name *</label>
+                                <input type="text" class="form-input" id="patientName" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Phone *</label>
+                                <input type="tel" class="form-input" id="patientPhone" required>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">Age</label>
+                                <input type="number" class="form-input" id="patientAge">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Gender</label>
+                                <select class="form-select" id="patientGender">
+                                    <option>Male</option>
+                                    <option>Female</option>
+                                    <option>Other</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Address</label>
+                            <input type="text" class="form-input" id="patientAddress">
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Add Patient</button>
+                    </form>
+                </div>
+
+                <div class="table-container">
+                    <div class="table-title">Patient List</div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Phone</th>
+                                <th>Age</th>
+                                <th>Gender</th>
+                                <th>Address</th>
+                                <th>Date Added</th>
+                            </tr>
+                        </thead>
+                        <tbody id="patientList">
+                            <tr>
+                                <td colspan="6" style="text-align: center; color: var(--text-light);">No patients yet</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- TESTS PAGE -->
+            <div class="page" id="tests">
+                <div class="page-title">🧪 Test Management</div>
+
+                <div class="form-container">
+                    <h3 style="margin-bottom: 20px;">Add Test Type</h3>
+                    <form onsubmit="addTestType(event)">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">Test Name *</label>
+                                <input type="text" class="form-input" id="testName" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Category</label>
+                                <input type="text" class="form-input" id="testCategory">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">Price *</label>
+                                <input type="number" class="form-input" id="testPrice" step="0.01" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Sample Type</label>
+                                <input type="text" class="form-input" id="testSampleType" placeholder="e.g., Blood, Urine">
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Add Test Type</button>
+                    </form>
+                </div>
+
+                <div class="table-container">
+                    <div class="table-title">Available Tests</div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Test Name</th>
+                                <th>Category</th>
+                                <th>Price</th>
+                                <th>Sample Type</th>
+                            </tr>
+                        </thead>
+                        <tbody id="testList">
+                            <tr>
+                                <td colspan="4" style="text-align: center; color: var(--text-light);">No tests added yet</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- BILLING PAGE -->
+            <div class="page" id="billing">
+                <div class="page-title">💰 Billing & Invoices</div>
+
+                <div class="form-container">
+                    <h3 style="margin-bottom: 20px;">Create Invoice</h3>
+                    <form onsubmit="createInvoice(event)">
+                        <div class="form-group">
+                            <label class="form-label">Select Patient *</label>
+                            <select class="form-select" id="invoicePatient" required>
+                                <option value="">Choose Patient</option>
+                            </select>
+                        </div>
+
+                        <div id="invoiceItems" style="margin-bottom: 20px;"></div>
+
+                        <button type="button" class="btn btn-secondary" onclick="addInvoiceItem()">+ Add Test</button>
+                        <button type="submit" class="btn btn-success" style="margin-left: 10px;">Create Invoice</button>
+                    </form>
+                </div>
+
+                <div class="table-container">
+                    <div class="table-title">Recent Invoices</div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Invoice #</th>
+                                <th>Patient</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                                <th>Date</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="invoiceList">
+                            <tr>
+                                <td colspan="6" style="text-align: center; color: var(--text-light);">No invoices yet</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- REPORTS PAGE -->
+            <div class="page" id="reports">
+                <div class="page-title">📋 Test Reports</div>
+
+                <div class="form-container">
+                    <h3 style="margin-bottom: 20px;">Generate Report</h3>
+                    <div class="form-group">
+                        <label class="form-label">Select Invoice</label>
+                        <select class="form-select" id="reportInvoice">
+                            <option value="">Choose Invoice</option>
+                        </select>
+                    </div>
+                    <button type="button" class="btn btn-primary" onclick="generateReport()">Generate Report</button>
+                </div>
+
+                <div class="table-container">
+                    <div class="table-title">Test Results</div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Patient</th>
+                                <th>Test</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="reportList">
+                            <tr>
+                                <td colspan="5" style="text-align: center; color: var(--text-light);">No reports yet</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- INVENTORY PAGE -->
+            <div class="page" id="inventory">
+                <div class="page-title">📦 Inventory Management</div>
+
+                <div class="form-container">
+                    <h3 style="margin-bottom: 20px;">Add Item</h3>
+                    <form onsubmit="addInventoryItem(event)">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">Item Name *</label>
+                                <input type="text" class="form-input" id="itemName" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Quantity *</label>
+                                <input type="number" class="form-input" id="itemQuantity" required>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">Unit Price *</label>
+                                <input type="number" class="form-input" id="itemPrice" step="0.01" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Supplier</label>
+                                <input type="text" class="form-input" id="itemSupplier">
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Add Item</button>
+                    </form>
+                </div>
+
+                <div class="table-container">
+                    <div class="table-title">Inventory Items</div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Item Name</th>
+                                <th>Quantity</th>
+                                <th>Unit Price</th>
+                                <th>Total Value</th>
+                                <th>Supplier</th>
+                            </tr>
+                        </thead>
+                        <tbody id="inventoryList">
+                            <tr>
+                                <td colspan="5" style="text-align: center; color: var(--text-light);">No items in inventory</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- SETTINGS PAGE -->
+            <div class="page" id="settings">
+                <div class="page-title">⚙️ Settings & Backup</div>
+
+                <div class="form-container">
+                    <h3 style="margin-bottom: 20px;">System Backup</h3>
+                    <p style="margin-bottom: 15px; color: var(--text-light); font-size: 13px;">
+                        Download all your data as a JSON file for backup.
+                    </p>
+                    <button type="button" class="btn btn-primary" onclick="backupData()">📥 Download Backup</button>
+                </div>
+
+                <div class="form-container">
+                    <h3 style="margin-bottom: 20px;">Restore Data</h3>
+                    <p style="margin-bottom: 15px; color: var(--text-light); font-size: 13px;">
+                        Upload a previously backed-up JSON file to restore your data.
+                    </p>
+                    <input type="file" id="restoreFile" accept=".json" style="margin-bottom: 15px;">
+                    <button type="button" class="btn btn-primary" onclick="restoreData()">📤 Restore Data</button>
+                </div>
+
+                <div class="form-container">
+                    <h3 style="margin-bottom: 20px;">About System</h3>
+                    <p style="font-size: 13px; line-height: 1.8;">
+                        <strong>System:</strong> Memorial Diagnostic ERP<br>
+                        <strong>Version:</strong> 1.0 Professional<br>
+                        <strong>Type:</strong> Online/Offline <br>
+                        <strong>Developer:</strong> Ahad<br>
+                        <strong>Email:</strong> kaziahad99@gmail.com<br>
+                        <strong>Phone:</strong> 01646762271<br>
+                        <strong>Last Updated:</strong> <span id="lastUpdated">Now</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- INVOICE MODAL -->
+<div class="modal" id="invoiceModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <span>Invoice Preview</span>
+            <button class="modal-close" onclick="closeModal('invoiceModal')">&times;</button>
+        </div>
+        <div id="invoicePreview"></div>
+    </div>
+</div>
+
+<script>
+    // ===== DATABASE SETUP =====
+    let db;
+    const dbName = 'DiagnosticERP';
+    const storeNames = ['patients', 'tests', 'invoices', 'inventory', 'reports'];
+
+    // Initialize IndexedDB
+    function initDB() {
+        const request = indexedDB.open(dbName, 1);
+
+        request.onerror = () => console.error('DB error');
+        request.onsuccess = () => {
+            db = request.result;
+            loadAllData();
+        };
+
+        request.onupgradeneeded = (event) => {
+            db = event.target.result;
+            storeNames.forEach(store => {
+                if (!db.objectStoreNames.contains(store)) {
+                    db.createObjectStore(store, { keyPath: 'id', autoIncrement: true });
+                }
+            });
+        };
+    }
+
+    // Save to DB
+    function saveToDb(storeName, data) {
+        if (!db) return;
+        const transaction = db.transaction([storeName], 'readwrite');
+        const store = transaction.objectStore(storeName);
+        store.add(data);
+    }
+
+    // Get all from DB
+    function getAllFromDb(storeName, callback) {
+        if (!db) return;
+        const transaction = db.transaction([storeName], 'readonly');
+        const store = transaction.objectStore(storeName);
+        const request = store.getAll();
+
+        request.onsuccess = () => {
+            callback(request.result);
+        };
+    }
+
+    // ===== LOGIN SYSTEM =====
+    const users = {
+        'admin': 'admin@123',
+        'doctor': 'doctor@123',
+        'receptionist': 'recept@123'
+    };
+
+    let currentUser = null;
+
+    function handleLogin(event) {
+        event.preventDefault();
+        const username = document.getElementById('loginUsername').value;
+        const password = document.getElementById('loginPassword').value;
+        const errorDiv = document.getElementById('loginError');
+
+        if (users[username] === password) {
+            currentUser = username;
+            loginSuccess();
+        } else {
+            errorDiv.textContent = '❌ Invalid credentials';
+            errorDiv.classList.add('show');
+            setTimeout(() => errorDiv.classList.remove('show'), 3000);
+        }
+    }
+
+    function loginSuccess() {
+        document.getElementById('loginPage').style.display = 'none';
+        document.getElementById('appContainer').style.display = 'flex';
+        updateUserUI();
+        initDB();
+        updatePatientSelect();
+    }
+
+    function updateUserUI() {
+        document.getElementById('userName').textContent = currentUser.toUpperCase();
+        document.getElementById('userAvatar').textContent = currentUser[0].toUpperCase();
+        document.getElementById('userRole').textContent = currentUser === 'admin' ? 'Administrator' : currentUser.charAt(0).toUpperCase() + currentUser.slice(1);
+    }
+
+    function handleLogout() {
+        currentUser = null;
+        document.getElementById('loginPage').style.display = 'flex';
+        document.getElementById('appContainer').style.display = 'none';
+        document.getElementById('loginUsername').value = '';
+        document.getElementById('loginPassword').value = '';
+    }
+
+    // ===== PAGE NAVIGATION =====
+    function showPage(pageId) {
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        document.getElementById(pageId).classList.add('active');
+
+        document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+        document.querySelector(`[data-page="${pageId}"]`).classList.add('active');
+    }
+
+    // ===== PATIENT MANAGEMENT =====
+    function addPatient(event) {
+        event.preventDefault();
+
+        const patient = {
+            name: document.getElementById('patientName').value,
+            phone: document.getElementById('patientPhone').value,
+            age: document.getElementById('patientAge').value,
+            gender: document.getElementById('patientGender').value,
+            address: document.getElementById('patientAddress').value,
+            dateAdded: new Date().toLocaleDateString()
+        };
+
+        saveToDb('patients', patient);
+        event.target.reset();
+        displayPatients();
+        updatePatientSelect();
+        alert('Patient added successfully!');
+    }
+
+    function displayPatients() {
+        getAllFromDb('patients', (patients) => {
+            const tbody = document.getElementById('patientList');
+            if (patients.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" style="text-align: center;">No patients yet</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = patients.map(p => `
+                <tr>
+                    <td>${p.name}</td>
+                    <td>${p.phone}</td>
+                    <td>${p.age}</td>
+                    <td>${p.gender}</td>
+                    <td>${p.address}</td>
+                    <td>${p.dateAdded}</td>
+                </tr>
+            `).join('');
+        });
+    }
+
+    function updatePatientSelect() {
+        getAllFromDb('patients', (patients) => {
+            const selects = ['invoicePatient'];
+            selects.forEach(id => {
+                const select = document.getElementById(id);
+                if (!select) return;
+                const currentValue = select.value;
+                select.innerHTML = '<option value="">Choose Patient</option>' +
+                    patients.map(p => `<option value="${p.id}">${p.name}</option>`).join('');
+                select.value = currentValue;
+            });
+        });
+    }
+
+    // ===== TEST MANAGEMENT =====
+    function addTestType(event) {
+        event.preventDefault();
+
+        const test = {
+            name: document.getElementById('testName').value,
+            category: document.getElementById('testCategory').value,
+            price: parseFloat(document.getElementById('testPrice').value),
+            sampleType: document.getElementById('testSampleType').value
+        };
+
+        saveToDb('tests', test);
+        event.target.reset();
+        displayTests();
+        alert('Test added successfully!');
+    }
+
+    function displayTests() {
+        getAllFromDb('tests', (tests) => {
+            const tbody = document.getElementById('testList');
+            if (tests.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="4" style="text-align: center;">No tests added</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = tests.map(t => `
+                <tr>
+                    <td>${t.name}</td>
+                    <td>${t.category}</td>
+                    <td>${t.price} Tk</td>
+                    <td>${t.sampleType}</td>
+                </tr>
+            `).join('');
+        });
+    }
+
+    // ===== INVOICE MANAGEMENT =====
+    let invoiceItemCount = 0;
+
+    function addInvoiceItem() {
+        invoiceItemCount++;
+        const itemsDiv = document.getElementById('invoiceItems');
+        const itemDiv = document.createElement('div');
+        itemDiv.id = `item-${invoiceItemCount}`;
+        itemDiv.style.marginBottom = '15px';
+        itemDiv.style.padding = '15px';
+        itemDiv.style.background = 'var(--light-bg)';
+        itemDiv.style.borderRadius = '6px';
+
+        itemDiv.innerHTML = `
+            <div style="display: flex; gap: 10px; justify-content: space-between;">
+                <select class="form-select" style="flex: 1;" onchange="updateItemPrice(${invoiceItemCount})">
+                    <option value="">Select Test</option>
+                </select>
+                <input type="number" class="form-input" placeholder="Qty" min="1" value="1" style="width: 80px;">
+                <input type="number" class="form-input" placeholder="Price" readonly style="width: 100px;">
+                <button type="button" onclick="removeItem(${invoiceItemCount})" class="btn btn-danger">Remove</button>
+            </div>
+        `;
+
+        itemsDiv.appendChild(itemDiv);
+
+        getAllFromDb('tests', (tests) => {
+            const select = itemDiv.querySelector('select');
+            select.innerHTML = '<option value="">Select Test</option>' +
+                tests.map(t => `<option value="${t.id}" data-price="${t.price}">${t.name} (${t.price} Tk)</option>`).join('');
+        });
+    }
+
+    function removeItem(count) {
+        document.getElementById(`item-${count}`).remove();
+    }
+
+    function updateItemPrice(count) {
+        const select = document.querySelector(`#item-${count} select`);
+        const priceInput = document.querySelector(`#item-${count} input[type="number"]:last-of-type`);
+        const price = select.options[select.selectedIndex].dataset.price;
+        priceInput.value = price || '';
+    }
+
+    function createInvoice(event) {
+        event.preventDefault();
+
+        const patientId = document.getElementById('invoicePatient').value;
+        const items = [];
+        let total = 0;
+
+        document.querySelectorAll('#invoiceItems > div').forEach(div => {
+            const select = div.querySelector('select');
+            const qty = parseInt(div.querySelector('input[placeholder="Qty"]').value);
+            const price = parseFloat(div.querySelector('input[placeholder="Price"]').value);
+
+            if (select.value && qty && price) {
+                items.push({ testId: select.value, testName: select.options[select.selectedIndex].text, qty, price });
+                total += qty * price;
+            }
+        });
+
+        if (!patientId || items.length === 0) {
+            alert('Please select patient and add tests');
+            return;
+        }
+
+        const invoice = {
+            patientId: parseInt(patientId),
+            items,
+            total,
+            status: 'Pending',
+            date: new Date().toLocaleDateString(),
+            timestamp: Date.now()
+        };
+
+        saveToDb('invoices', invoice);
+        document.getElementById('invoiceItems').innerHTML = '';
+        document.getElementById('invoicePatient').value = '';
+        displayInvoices();
+        alert('Invoice created successfully!');
+    }
+
+    function displayInvoices() {
+        getAllFromDb('invoices', (invoices) => {
+            const tbody = document.getElementById('invoiceList');
+            if (invoices.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" style="text-align: center;">No invoices</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = invoices.map((inv, idx) => `
+                <tr>
+                    <td>INV-${inv.id}</td>
+                    <td>Patient ${inv.patientId}</td>
+                    <td>${inv.total} Tk</td>
+                    <td><span style="color: var(--warning);">${inv.status}</span></td>
+                    <td>${inv.date}</td>
+                    <td><button class="btn btn-secondary" onclick="viewInvoice(${inv.id})">View</button></td>
+                </tr>
+            `).join('');
+        });
+
+        // Update report select
+        getAllFromDb('invoices', (invoices) => {
+            const select = document.getElementById('reportInvoice');
+            select.innerHTML = '<option value="">Choose Invoice</option>' +
+                invoices.map(inv => `<option value="${inv.id}">INV-${inv.id}</option>`).join('');
+        });
+    }
+
+    function viewInvoice(id) {
+        // Get invoice and show preview
+        alert('Invoice ID: ' + id + ' - Preview feature in development');
+    }
+
+    // ===== INVENTORY =====
+    function addInventoryItem(event) {
+        event.preventDefault();
+
+        const item = {
+            name: document.getElementById('itemName').value,
+            quantity: parseInt(document.getElementById('itemQuantity').value),
+            price: parseFloat(document.getElementById('itemPrice').value),
+            supplier: document.getElementById('itemSupplier').value,
+            dateAdded: new Date().toLocaleDateString()
+        };
+
+        saveToDb('inventory', item);
+        event.target.reset();
+        displayInventory();
+        alert('Item added successfully!');
+    }
+
+    function displayInventory() {
+        getAllFromDb('inventory', (items) => {
+            const tbody = document.getElementById('inventoryList');
+            if (items.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="5" style="text-align: center;">No items</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = items.map(item => `
+                <tr>
+                    <td>${item.name}</td>
+                    <td>${item.quantity}</td>
+                    <td>${item.price} Tk</td>
+                    <td>${item.quantity * item.price} Tk</td>
+                    <td>${item.supplier}</td>
+                </tr>
+            `).join('');
+        });
+    }
+
+    // ===== DASHBOARD =====
+    function loadDashboard() {
+        getAllFromDb('patients', (patients) => {
+            document.getElementById('totalPatients').textContent = patients.length;
+        });
+
+        getAllFromDb('invoices', (invoices) => {
+            document.getElementById('totalTests').textContent = invoices.reduce((sum, inv) => sum + inv.items.length, 0);
+            const revenue = invoices.reduce((sum, inv) => sum + inv.total, 0);
+            document.getElementById('totalRevenue').textContent = revenue.toFixed(2) + ' Tk';
+
+            const pending = invoices.filter(inv => inv.status === 'Pending').reduce((sum, inv) => sum + inv.total, 0);
+            document.getElementById('pendingAmount').textContent = pending.toFixed(2) + ' Tk';
+
+            const tbody = document.getElementById('recentTransactions');
+            const recent = invoices.slice(-5).reverse();
+            tbody.innerHTML = recent.map(inv => `
+                <tr>
+                    <td>${inv.date}</td>
+                    <td>Patient ${inv.patientId}</td>
+                    <td>${inv.items.length} tests</td>
+                    <td>${inv.total} Tk</td>
+                    <td><span style="color: var(--warning);">${inv.status}</span></td>
+                </tr>
+            `).join('');
+        });
+    }
+
+    function loadAllData() {
+        displayPatients();
+        displayTests();
+        displayInvoices();
+        displayInventory();
+        loadDashboard();
+    }
+
+    // ===== BACKUP & RESTORE =====
+    function backupData() {
+        const allData = {};
+        let completed = 0;
+
+        storeNames.forEach(store => {
+            getAllFromDb(store, (data) => {
+                allData[store] = data;
+                completed++;
+
+                if (completed === storeNames.length) {
+                    const json = JSON.stringify(allData, null, 2);
+                    const blob = new Blob([json], { type: 'application/json' });
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `diagnostic-backup-${Date.now()}.json`;
+                    a.click();
+                    alert('Backup downloaded successfully!');
+                }
+            });
+        });
+    }
+
+    function restoreData() {
+        const file = document.getElementById('restoreFile').files[0];
+        if (!file) {
+            alert('Please select a file');
+            return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            try {
+                const data = JSON.parse(e.target.result);
+
+                storeNames.forEach(store => {
+                    if (data[store]) {
+                        data[store].forEach(item => saveToDb(store, item));
+                    }
+                });
+
+                alert('Data restored successfully!');
+                loadAllData();
+            } catch (err) {
+                alert('Invalid backup file');
+            }
+        };
+        reader.readAsText(file);
+    }
+
+    function generateReport() {
+        alert('Report generation feature coming soon!');
+    }
+
+    function closeModal(id) {
+        document.getElementById(id).classList.remove('show');
+    }
+
+    // ===== OFFLINE DETECTION =====
+    window.addEventListener('online', () => {
+        document.getElementById('offlineBadge').classList.remove('show');
+    });
+
+    window.addEventListener('offline', () => {
+        document.getElementById('offlineBadge').classList.add('show');
+    });
+
+    // Check initial connection
+    if (!navigator.onLine) {
+        document.getElementById('offlineBadge').classList.add('show');
+    }
+
+    // Initialize
+    window.addEventListener('load', () => {
+        document.getElementById('lastUpdated').textContent = new Date().toLocaleString();
+    });
+</script>
+
+</body>
+</html>
