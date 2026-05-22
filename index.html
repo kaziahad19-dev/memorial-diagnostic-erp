@@ -13,118 +13,184 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #0f1e3f 0%, #1a3a52 100%);
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 50%, #90caf9 100%);
             min-height: 100vh;
             display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        /* ===== LOGIN PAGE ===== */
-        .login-container {
-            width: 100%;
-            height: 100vh;
-            background: linear-gradient(135deg, #0f1e3f 0%, #1a3a52 100%);
-            display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
             position: relative;
             overflow: hidden;
         }
 
-        .login-container::before {
-            content: '';
-            position: absolute;
+        /* HEXAGON BACKGROUND PATTERN */
+        .hexagon-background {
+            position: fixed;
             top: 0;
-            right: 0;
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(circle, rgba(0, 150, 136, 0.1) 0%, transparent 70%);
-            border-radius: 50%;
-            pointer-events: none;
-        }
-
-        .login-container::after {
-            content: '';
-            position: absolute;
-            bottom: -200px;
             left: 0;
             width: 100%;
-            height: 400px;
-            background: linear-gradient(to top, rgba(0, 122, 114, 0.2), rgba(15, 30, 63, 0.5));
-            clip-path: polygon(0 100%, 0 20%, 100% 0, 100% 100%);
+            height: 100%;
+            opacity: 0.08;
+            background-image: 
+                radial-gradient(circle, #0f1e3f 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+            z-index: 1;
         }
 
-        .hexagon-bg {
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 400px;
-            height: 400px;
-            opacity: 0.05;
-            background-image: 
-                radial-gradient(circle, #00a699 1px, transparent 1px),
-                radial-gradient(circle, #00a699 1px, transparent 1px);
-            background-size: 40px 40px;
-            background-position: 0 0, 20px 20px;
-            pointer-events: none;
+        /* LOGIN CONTAINER */
+        .login-page {
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* LOGO SECTION */
+        .logo-section {
+            text-align: center;
+            margin-bottom: 40px;
+            animation: slideDown 0.6s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .logo-container {
-            text-align: center;
-            margin-bottom: 50px;
-            position: relative;
-            z-index: 2;
-        }
-
-        .logo {
-            width: 120px;
-            height: 120px;
-            margin: 0 auto 30px;
-            background: linear-gradient(135deg, #0f1e3f 0%, #1a3a52 100%);
-            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 60px;
-            color: #00a699;
-            box-shadow: 0 10px 40px rgba(0, 166, 153, 0.2);
+            gap: 15px;
+            margin-bottom: 20px;
         }
 
-        .logo-text h1 {
+        .md-logo {
+            font-size: 60px;
+            font-weight: 800;
+            letter-spacing: 8px;
+        }
+
+        .m-dark {
             color: #0f1e3f;
-            font-size: 32px;
+        }
+
+        .d-teal {
+            color: #00897b;
+        }
+
+        .logo-subtitle {
+            font-size: 14px;
+            color: #00897b;
+            letter-spacing: 4px;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+
+        .centre-name {
+            font-size: 28px;
+            color: #0f1e3f;
             font-weight: 700;
             letter-spacing: 2px;
-        }
-
-        .logo-text p {
-            color: #00a699;
-            font-size: 14px;
-            letter-spacing: 3px;
             margin-top: 5px;
         }
 
-        .login-form-container {
-            background: white;
-            border-radius: 20px;
-            padding: 50px 40px;
+        /* MEDICAL ICONS */
+        .medical-icons {
+            position: absolute;
+            top: 40px;
+            left: 40px;
+            font-size: 30px;
+            opacity: 0.3;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .medical-icons-right {
+            position: absolute;
+            top: 60px;
+            right: 60px;
+            font-size: 40px;
+            opacity: 0.2;
+            animation: float 8s ease-in-out infinite reverse;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(20px); }
+        }
+
+        /* CURVED DIVIDER */
+        .curve-divider {
+            position: absolute;
+            top: 50%;
+            left: 0;
             width: 100%;
-            max-width: 450px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            height: 200px;
+            background: linear-gradient(180deg, rgba(15, 30, 63, 0.15) 0%, rgba(0, 137, 123, 0.1) 100%);
+            clip-path: polygon(
+                0% 0%,
+                0% 60%,
+                2% 65%,
+                4% 68%,
+                6% 70%,
+                8% 71%,
+                10% 72%,
+                15% 73%,
+                20% 73%,
+                30% 72%,
+                40% 70%,
+                50% 68%,
+                60% 70%,
+                70% 72%,
+                80% 73%,
+                85% 73%,
+                90% 72%,
+                92% 71%,
+                94% 70%,
+                96% 68%,
+                98% 65%,
+                100% 60%,
+                100% 0%
+            );
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* LOGIN FORM CONTAINER */
+        .form-box {
+            background: white;
+            border-radius: 25px;
+            padding: 50px 45px;
+            width: 100%;
+            max-width: 420px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
             position: relative;
-            z-index: 2;
+            z-index: 3;
+            animation: slideUp 0.6s ease;
         }
 
-        .form-title {
-            text-align: center;
-            margin-bottom: 40px;
-            font-size: 24px;
-            color: #0f1e3f;
-            font-weight: 600;
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
+        /* FORM FIELDS */
         .form-group {
             margin-bottom: 25px;
         }
@@ -136,38 +202,44 @@
             color: #0f1e3f;
             font-weight: 600;
             font-size: 14px;
+            gap: 8px;
         }
 
-        .form-label svg {
-            width: 20px;
-            height: 20px;
-            margin-right: 8px;
-            color: #00a699;
+        .label-icon {
+            font-size: 18px;
+            color: #00897b;
         }
 
         .form-input {
             width: 100%;
             padding: 14px 16px;
             border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            font-size: 16px;
-            transition: all 0.3s ease;
+            border-radius: 10px;
+            font-size: 15px;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            transition: all 0.3s ease;
+            background: #f9f9f9;
         }
 
         .form-input:focus {
             outline: none;
-            border-color: #00a699;
-            box-shadow: 0 0 0 3px rgba(0, 166, 153, 0.1);
+            border-color: #00897b;
+            background: white;
+            box-shadow: 0 0 0 4px rgba(0, 137, 123, 0.1);
         }
 
-        .login-btn {
+        .form-input::placeholder {
+            color: #bdbdbd;
+        }
+
+        /* SIGN IN BUTTON */
+        .sign-in-btn {
             width: 100%;
             padding: 14px;
-            background: linear-gradient(135deg, #00a699 0%, #008f7a 100%);
+            background: linear-gradient(135deg, #00897b 0%, #00695c 100%);
             color: white;
             border: none;
-            border-radius: 8px;
+            border-radius: 10px;
             font-size: 16px;
             font-weight: 600;
             cursor: pointer;
@@ -176,37 +248,72 @@
             align-items: center;
             justify-content: center;
             gap: 10px;
+            margin-top: 10px;
         }
 
-        .login-btn:hover {
+        .sign-in-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(0, 166, 153, 0.3);
+            box-shadow: 0 12px 30px rgba(0, 137, 123, 0.35);
         }
 
-        .login-btn:active {
+        .sign-in-btn:active {
             transform: translateY(0);
         }
 
+        .sign-in-arrow {
+            font-size: 18px;
+            margin-left: 5px;
+        }
+
+        /* ERROR MESSAGE */
         .error-message {
             color: #d32f2f;
             font-size: 13px;
             margin-top: 8px;
             display: none;
+            padding: 8px;
+            background: #ffebee;
+            border-radius: 6px;
         }
 
+        .error-message.show {
+            display: block;
+        }
+
+        /* FOOTER */
         .footer {
-            position: absolute;
+            position: fixed;
             bottom: 20px;
             width: 100%;
             text-align: center;
-            color: white;
-            font-size: 12px;
+            color: #0f1e3f;
+            font-size: 11px;
             z-index: 2;
         }
 
         .footer p {
-            margin: 5px 0;
-            line-height: 1.6;
+            margin: 4px 0;
+            line-height: 1.5;
+            letter-spacing: 0.5px;
+        }
+
+        .footer-main {
+            font-weight: 600;
+            color: #00897b;
+        }
+
+        .footer-contact {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 5px;
+        }
+
+        .footer-contact span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
         }
 
         /* ===== DASHBOARD PAGE ===== */
@@ -224,7 +331,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
         }
 
         .dashboard-header-left {
@@ -234,12 +341,13 @@
         }
 
         .dashboard-logo {
-            font-size: 24px;
+            font-size: 22px;
             font-weight: 700;
+            letter-spacing: 1px;
         }
 
         .dashboard-logo span {
-            color: #00a699;
+            color: #00897b;
         }
 
         .user-info {
@@ -251,13 +359,14 @@
         .user-avatar {
             width: 40px;
             height: 40px;
-            background: #00a699;
+            background: #00897b;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 600;
             color: white;
+            font-size: 16px;
         }
 
         .user-details {
@@ -282,7 +391,8 @@
             padding: 8px 16px;
             border-radius: 6px;
             cursor: pointer;
-            font-size: 14px;
+            font-size: 13px;
+            font-weight: 600;
             transition: all 0.3s ease;
         }
 
@@ -295,6 +405,7 @@
             height: calc(100vh - 80px);
         }
 
+        /* SIDEBAR */
         .sidebar {
             width: 250px;
             background: white;
@@ -320,26 +431,23 @@
             transition: all 0.3s ease;
             border-left: 4px solid transparent;
             gap: 15px;
+            font-size: 14px;
         }
 
         .sidebar-menu a:hover {
             background: #f5f5f5;
-            color: #00a699;
-            border-left-color: #00a699;
+            color: #00897b;
+            border-left-color: #00897b;
         }
 
         .sidebar-menu a.active {
             background: #e0f2f1;
-            color: #00a699;
-            border-left-color: #00a699;
+            color: #00897b;
+            border-left-color: #00897b;
             font-weight: 600;
         }
 
-        .sidebar-menu svg {
-            width: 20px;
-            height: 20px;
-        }
-
+        /* MAIN CONTENT */
         .main-content {
             flex: 1;
             padding: 30px;
@@ -401,14 +509,14 @@
 
         .card-title {
             color: #424242;
-            font-size: 14px;
+            font-size: 13px;
             margin-bottom: 8px;
         }
 
         .card-value {
             font-size: 24px;
             font-weight: 700;
-            color: #00a699;
+            color: #00897b;
         }
 
         /* TABLES */
@@ -442,12 +550,14 @@
             font-weight: 600;
             color: #0f1e3f;
             border-bottom: 2px solid #e0e0e0;
+            font-size: 13px;
         }
 
         table td {
             padding: 15px;
             border-bottom: 1px solid #f0f0f0;
             color: #424242;
+            font-size: 13px;
         }
 
         table tr:hover {
@@ -472,7 +582,7 @@
             margin-bottom: 8px;
             color: #0f1e3f;
             font-weight: 600;
-            font-size: 14px;
+            font-size: 13px;
         }
 
         .form-group-dashboard input,
@@ -483,15 +593,15 @@
             border: 1px solid #e0e0e0;
             border-radius: 6px;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            font-size: 14px;
+            font-size: 13px;
         }
 
         .form-group-dashboard input:focus,
         .form-group-dashboard select:focus,
         .form-group-dashboard textarea:focus {
             outline: none;
-            border-color: #00a699;
-            box-shadow: 0 0 0 3px rgba(0, 166, 153, 0.1);
+            border-color: #00897b;
+            box-shadow: 0 0 0 3px rgba(0, 137, 123, 0.1);
         }
 
         .btn {
@@ -499,18 +609,18 @@
             border: none;
             border-radius: 6px;
             cursor: pointer;
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 600;
             transition: all 0.3s ease;
         }
 
         .btn-primary {
-            background: #00a699;
+            background: #00897b;
             color: white;
         }
 
         .btn-primary:hover {
-            background: #008f7a;
+            background: #00695c;
         }
 
         .btn-secondary {
@@ -520,15 +630,6 @@
 
         .btn-secondary:hover {
             background: #d0d0d0;
-        }
-
-        .btn-danger {
-            background: #d32f2f;
-            color: white;
-        }
-
-        .btn-danger:hover {
-            background: #b71c1c;
         }
 
         /* BILL RECEIPT */
@@ -549,18 +650,15 @@
 
         .receipt-header h1 {
             color: #0f1e3f;
-            font-size: 24px;
+            font-size: 22px;
             margin-bottom: 5px;
+            letter-spacing: 2px;
         }
 
         .receipt-header p {
             color: #424242;
-            font-size: 13px;
+            font-size: 12px;
             margin: 3px 0;
-        }
-
-        .receipt-content {
-            margin-bottom: 20px;
         }
 
         .receipt-row {
@@ -568,16 +666,16 @@
             justify-content: space-between;
             padding: 10px 0;
             border-bottom: 1px solid #f0f0f0;
-            font-size: 14px;
+            font-size: 13px;
         }
 
         .receipt-row.total {
             border-top: 2px solid #0f1e3f;
             border-bottom: 2px solid #0f1e3f;
             font-weight: 700;
-            font-size: 16px;
+            font-size: 15px;
             padding: 15px 0;
-            color: #00a699;
+            color: #00897b;
         }
 
         .receipt-row.discount {
@@ -609,7 +707,7 @@
             border: none;
             border-radius: 6px;
             cursor: pointer;
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 600;
             margin-top: 20px;
         }
@@ -643,133 +741,79 @@
                 min-width: 120px;
             }
 
-            .sidebar-menu a {
-                flex-direction: column;
-                justify-content: center;
-                font-size: 12px;
-                text-align: center;
-            }
-
             .cards-grid {
                 grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
             }
 
-            .dashboard-header {
-                flex-direction: column;
-                gap: 15px;
+            .form-box {
+                max-width: 90%;
+                padding: 40px 30px;
             }
-
-            .dashboard-header-left {
-                width: 100%;
-                justify-content: space-between;
-            }
-        }
-
-        /* MODAL */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-        }
-
-        .modal.show {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .modal-content {
-            background-color: white;
-            padding: 30px;
-            border-radius: 12px;
-            width: 90%;
-            max-width: 500px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-        }
-
-        .modal-header {
-            font-size: 20px;
-            font-weight: 700;
-            color: #0f1e3f;
-            margin-bottom: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .modal-close {
-            background: none;
-            border: none;
-            font-size: 24px;
-            cursor: pointer;
-            color: #999;
-        }
-
-        .modal-close:hover {
-            color: #0f1e3f;
         }
     </style>
 </head>
 <body>
 
+<!-- HEXAGON BACKGROUND -->
+<div class="hexagon-background"></div>
+
 <!-- ===== LOGIN PAGE ===== -->
-<div class="login-container" id="loginPage">
-    <div class="hexagon-bg"></div>
-    
-    <div class="logo-container">
-        <div style="display: flex; align-items: center; justify-content: center; gap: 10px;">
-            <div style="font-size: 50px; color: #0f1e3f; font-weight: 700;">M</div>
-            <div style="font-size: 50px; color: #00a699; font-weight: 700;">D</div>
+<div class="login-page" id="loginPage">
+    <div class="medical-icons">+</div>
+    <div class="medical-icons-right">+</div>
+
+    <!-- LOGO SECTION -->
+    <div class="logo-section">
+        <div class="logo-container">
+            <div class="md-logo">
+                <span class="m-dark">M</span><span class="d-teal">D</span>
+            </div>
         </div>
-        <div class="logo-text">
-            <h1>MEMORIAL</h1>
-            <p>DIGITAL DIAGNOSTIC CENTRE</p>
-        </div>
+        <div class="logo-subtitle">─ DIGITAL DIAGNOSTIC CENTRE ─</div>
+        <div class="centre-name">MEMORIAL</div>
     </div>
 
-    <div class="login-form-container">
-        <div class="form-title">👤 Sign In</div>
+    <!-- CURVED DIVIDER -->
+    <div class="curve-divider"></div>
+
+    <!-- LOGIN FORM -->
+    <div class="form-box">
         <form id="loginForm" onsubmit="handleLogin(event)">
+            <!-- USERNAME FIELD -->
             <div class="form-group">
                 <label class="form-label">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                        <circle cx="12" cy="7" r="4"></circle>
-                    </svg>
+                    <span class="label-icon">👤</span>
                     Username
                 </label>
                 <input type="text" class="form-input" id="username" placeholder="admin" required>
             </div>
 
+            <!-- PASSWORD FIELD -->
             <div class="form-group">
                 <label class="form-label">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-                        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-                    </svg>
+                    <span class="label-icon">🔒</span>
                     Password
                 </label>
                 <input type="password" class="form-input" id="password" placeholder="••••" required>
             </div>
 
+            <!-- ERROR MESSAGE -->
             <div class="error-message" id="errorMessage"></div>
 
-            <button type="submit" class="login-btn">
-                Sign In →
+            <!-- SIGN IN BUTTON -->
+            <button type="submit" class="sign-in-btn">
+                Sign In <span class="sign-in-arrow">→</span>
             </button>
         </form>
     </div>
 
+    <!-- FOOTER -->
     <div class="footer">
-        <p>© 2025 Memorial Digital Diagnostic Centre</p>
-        <p>System Architecture & Development: Ahad</p>
-        <p>📧 kaziahad99@gmail.com | 📞 01646762271</p>
-        <p>Version 1.0</p>
+        <p>This system was developed by <span class="footer-main">Ahad</span></p>
+        <div class="footer-contact">
+            <span>📞 01646762271</span>
+            <span>📧 kaziahad99@gmail.com</span>
+        </div>
     </div>
 </div>
 
@@ -970,7 +1014,7 @@
                         <h1>MEMORIAL</h1>
                         <p>DIGITAL DIAGNOSTIC CENTRE</p>
                         <p>Asokathi Hospital Road, Gournadi, Barishal</p>
-                        <p>📞 01646762271 | 📧 memorialdiagnostic2@gmail.com</p>
+                        <p>📞 01646762271 | 📧 kaziahad99@gmail.com</p>
                     </div>
 
                     <div class="receipt-content">
@@ -993,7 +1037,7 @@
                     </div>
 
                     <div style="border-bottom: 1px solid #f0f0f0; padding-bottom: 10px; margin-bottom: 15px;">
-                        <h4 style="color: #0f1e3f; margin-bottom: 10px;">Tests</h4>
+                        <h4 style="color: #0f1e3f; margin-bottom: 10px; font-size: 14px;">Tests</h4>
                         <div id="billTests"></div>
                     </div>
 
@@ -1013,7 +1057,7 @@
                     </div>
 
                     <div>
-                        <p style="color: #424242; font-size: 12px; margin: 15px 0; text-align: center;">
+                        <p style="color: #424242; font-size: 11px; margin: 15px 0; text-align: center;">
                             <strong>Received By:</strong> <span id="billReceivedBy">Receptionist</span>
                         </p>
                     </div>
@@ -1168,20 +1212,20 @@
                     </div>
                     <div class="form-group-dashboard">
                         <label>Contact Email</label>
-                        <input type="email" id="centreEmail" value="memorialdiagnostic2@gmail.com">
+                        <input type="email" id="centreEmail" value="kaziahad99@gmail.com">
                     </div>
                     <button class="btn btn-primary" onclick="saveSettings()">Save Settings</button>
                 </div>
 
                 <div class="form-container" style="margin-top: 30px;">
                     <h3 style="margin-bottom: 20px; color: #0f1e3f;">About System</h3>
-                    <p>
-                        <strong>System Name:</strong> Memorial Digital Diagnostic Centre - ERP<br>
-                        <strong>Version:</strong> 1.0<br>
-                        <strong>Developer:</strong> Ahad<br>
-                        <strong>Email:</strong> kaziahad99@gmail.com<br>
-                        <strong>Phone:</strong> 01646762271<br>
-                        <strong>Features:</strong> Patient Management, Billing, Stock Control, Expense Tracking, Offline Support
+                    <p style="font-size: 13px; line-height: 1.8; color: #424242;">
+                        <strong style="color: #0f1e3f;">System Name:</strong> Memorial Digital Diagnostic Centre - ERP<br>
+                        <strong style="color: #0f1e3f;">Version:</strong> 1.0<br>
+                        <strong style="color: #0f1e3f;">Developer:</strong> Ahad<br>
+                        <strong style="color: #0f1e3f;">Email:</strong> kaziahad99@gmail.com<br>
+                        <strong style="color: #0f1e3f;">Phone:</strong> 01646762271<br>
+                        <strong style="color: #0f1e3f;">Features:</strong> Patient Management, Billing, Stock Control, Expense Tracking, User Management
                     </p>
                 </div>
             </div>
@@ -1209,21 +1253,18 @@
     // ===== LOGIN FUNCTIONS =====
     function handleLogin(event) {
         event.preventDefault();
-        const username = document.getElementById('username').value;
+        const username = document.getElementById('username').value.trim();
         const password = document.getElementById('password').value;
+        const errorDiv = document.getElementById('errorMessage');
 
         if (users[username] && users[username].password === password) {
             currentUser = { username, role: users[username].role };
             loginSuccess();
         } else {
-            showError('Invalid username or password');
+            errorDiv.textContent = '❌ Invalid username or password';
+            errorDiv.classList.add('show');
+            setTimeout(() => errorDiv.classList.remove('show'), 3000);
         }
-    }
-
-    function showError(message) {
-        const errorDiv = document.getElementById('errorMessage');
-        errorDiv.textContent = message;
-        errorDiv.style.display = 'block';
     }
 
     function loginSuccess() {
@@ -1232,6 +1273,7 @@
         updateUserUI();
         loadDashboard();
         updateMenuAccess();
+        displayUsers();
     }
 
     function updateUserUI() {
@@ -1256,14 +1298,6 @@
         } else {
             userManagementMenu.style.display = 'none';
         }
-
-        // Hide edit for owner role
-        if (currentUser.role === 'Owner') {
-            document.querySelectorAll('[data-page="patients"], [data-page="tests"], [data-page="receipt"], [data-page="stock"], [data-page="expenses"]').forEach(el => {
-                el.style.opacity = '0.6';
-                el.style.pointerEvents = 'none';
-            });
-        }
     }
 
     function handleLogout() {
@@ -1272,22 +1306,19 @@
         document.getElementById('dashboardPage').style.display = 'none';
         document.getElementById('username').value = '';
         document.getElementById('password').value = '';
-        document.getElementById('errorMessage').style.display = 'none';
+        document.getElementById('errorMessage').classList.remove('show');
     }
 
     // ===== PAGE NAVIGATION =====
     function showPage(pageId) {
         event.preventDefault();
         
-        // Hide all pages
         document.querySelectorAll('.page-section').forEach(page => {
             page.classList.remove('active');
         });
 
-        // Show selected page
         document.getElementById(pageId).classList.add('active');
 
-        // Update menu
         document.querySelectorAll('.menu-link').forEach(link => {
             link.classList.remove('active');
         });
@@ -1296,10 +1327,10 @@
 
     // ===== PATIENT FUNCTIONS =====
     function addPatient() {
-        const name = document.getElementById('patientName').value;
-        const phone = document.getElementById('patientPhone').value;
+        const name = document.getElementById('patientName').value.trim();
+        const phone = document.getElementById('patientPhone').value.trim();
         const age = document.getElementById('patientAge').value;
-        const address = document.getElementById('patientAddress').value;
+        const address = document.getElementById('patientAddress').value.trim();
 
         if (!name || !phone) {
             alert('Please fill in required fields');
@@ -1357,7 +1388,7 @@
     // ===== TEST FUNCTIONS =====
     function addTest() {
         const patientId = document.getElementById('testPatient').value;
-        const testName = document.getElementById('testName').value;
+        const testName = document.getElementById('testName').value.trim();
         const quantity = parseInt(document.getElementById('testQuantity').value);
         const amount = parseFloat(document.getElementById('testAmount').value);
 
@@ -1433,7 +1464,7 @@
             `;
         });
 
-        const discount = 0; // Can be updated
+        const discount = 0;
         const total = subtotal - discount;
 
         document.getElementById('billPatientName').textContent = patient.name;
@@ -1444,9 +1475,8 @@
         document.getElementById('billSubtotal').textContent = subtotal.toFixed(2) + ' Tk';
         document.getElementById('billDiscount').textContent = discount.toFixed(2) + ' Tk';
         document.getElementById('billTotal').textContent = total.toFixed(2) + ' Tk';
-        document.getElementById('billReceivedBy').textContent = currentUser.role === 'Reception' ? 'Receptionist' : currentUser.username;
+        document.getElementById('billReceivedBy').textContent = currentUser.username;
 
-        // Show Due stamp only if unpaid
         if (total > 0) {
             document.getElementById('dueStampContainer').style.display = 'block';
         } else {
@@ -1458,7 +1488,7 @@
 
     // ===== STOCK FUNCTIONS =====
     function addStock() {
-        const itemName = document.getElementById('stockItemName').value;
+        const itemName = document.getElementById('stockItemName').value.trim();
         const quantity = parseInt(document.getElementById('stockQuantity').value);
         const price = parseFloat(document.getElementById('stockPrice').value);
 
@@ -1504,7 +1534,7 @@
     function addExpense() {
         const category = document.getElementById('expenseCategory').value;
         const amount = parseFloat(document.getElementById('expenseAmount').value);
-        const description = document.getElementById('expenseDescription').value;
+        const description = document.getElementById('expenseDescription').value.trim();
 
         if (!category || !amount) {
             alert('Please fill in required fields');
@@ -1543,14 +1573,14 @@
         `).join('');
     }
 
-    // ===== USER MANAGEMENT FUNCTIONS =====
+    // ===== USER MANAGEMENT =====
     function displayUsers() {
         const tbody = document.getElementById('usersTableBody');
         tbody.innerHTML = Object.entries(users).map(([username, data]) => `
             <tr>
                 <td>${username}</td>
                 <td>${data.role}</td>
-                <td><button class="btn btn-secondary" onclick="editUser('${username}')">Edit</button></td>
+                <td><button class="btn btn-secondary">Edit</button></td>
             </tr>
         `).join('');
 
@@ -1563,7 +1593,7 @@
 
     function updateUserCredentials() {
         const username = document.getElementById('selectUserToEdit').value;
-        const newUsername = document.getElementById('editUsername').value;
+        const newUsername = document.getElementById('editUsername').value.trim();
         const newPassword = document.getElementById('editPassword').value;
 
         if (!username) {
@@ -1592,7 +1622,7 @@
         displayUsers();
     }
 
-    // ===== DASHBOARD FUNCTIONS =====
+    // ===== DASHBOARD =====
     function loadDashboard() {
         document.getElementById('totalPatients').textContent = patients.length;
         document.getElementById('totalTests').textContent = tests.length;
@@ -1620,7 +1650,7 @@
         `).join('');
     }
 
-    // ===== SETTINGS FUNCTIONS =====
+    // ===== SETTINGS =====
     function saveSettings() {
         alert('Settings saved successfully');
     }
@@ -1629,6 +1659,7 @@
     window.addEventListener('load', function() {
         document.getElementById('username').value = 'admin';
         document.getElementById('password').value = '';
+        document.getElementById('username').focus();
     });
 </script>
 
